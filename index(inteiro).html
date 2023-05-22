@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de IMC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+    rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Lato", sans-serif;
+    }
+
+    body {
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: gray;
+    }
+
+    .hide {
+      display: none !important;
+    }
+
+    .container {
+      min-width: 400px;
+      min-height: 400px;
+      background-color: white;
+      padding: 2rem;
+      border: 2px solid #00bf63;
+      border-radius: 6px;
+      box-shadow: 4px 4px 10px #00bf63;
+    }
+
+    /* IMC Form */
+    #calc-container h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .form-inputs {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .form-control {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+
+    .form-control label {
+      font-weight: bold;
+      margin-bottom: 0.6rem;
+      color: gray;
+    }
+
+    .form-control input {
+      padding: 1rem 0.5rem;
+    }
+
+    .action-control {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      gap: 1rem;
+    }
+
+    .select-sex {
+      flex: 1;
+      flex-direction: row;
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 20px;
+    }
+
+    #woman-btn {
+      margin-bottom: flex;
+      border: 1px solid #e3cdf0;
+      background-color: #fbf4ff;
+      color: #ac81c5;
+      cursor: pointer;
+    }
+
+    #man-btn {
+      margin-bottom: flex;
+      border: 1px solid #bbd4e8;
+      background-color: #eff8ff;
+      color: #5187ac;
+      cursor: pointer;
+    }
+
+    button {
+      text-transform: uppercase;
+      padding: 1rem 1.5rem;
+      background-color: #00bf63;
+      border: none;
+      border-radius: 5px;
+      color: whitesmoke;
+      font-weight: bold;
+      cursor: pointer;
+      opacity: 0.9;
+      flex: 1;
+    }
+
+    button:hover {
+      opacity: 1;
+    }
+
+    #clear-btn {
+      background-color: #444;
+    }
+
+    /* Tabela IMC Resultado */
+    #result-container {
+      text-align: center;
+    }
+
+    #imc-number {
+      font-size: 2.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    #imc-info {
+      font-size: 1.4rem;
+      color: #ccc;
+    }
+
+    #result-container h3 {
+      margin-top: 1rem;
+      color: #dfdfdf;
+    }
+
+    #result-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #imc-table {
+      margin: 1.5rem 0;
+      font-size: 0.8rem;
+    }
+
+    .table-header {
+      font-weight: bold;
+      color: #ccc;
+    }
+
+    .table-header,
+    .table-data {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #444;
+      text-align: center;
+    }
+
+    .table-header h4,
+    .table-data p {
+      flex: 1;
+    }
+
+    .table-header h4:nth-child(3),
+    .table-data p:nth-child(3) {
+      max-width: 80px;
+    }
+
+    #back-btn {
+      align-self: center;
+    }
+
+    .good {
+      color: #12db34;
+    }
+
+    .low {
+      color: #dbce12;
+    }
+
+    .medium {
+      color: #db6212;
+    }
+
+    .high {
+      color: #db1912;
+    }
+  </style>
+
+</head>
+<!-- Criado por Lucas Toscan -->
+<body>
+  <div class="container">
+    <div id="calc-container">
+      <h2>Calculadora de IMC</h2>
+      <p style="text-align: center;">Insira seus dados na calculadora para obter seu IMC</p><br>
+      <form id="imc-form">
+        <div class="form-inputs">
+          <div class="select-sex">
+            <button id="woman-btn" onclick="changeButtonColorWoman()">Mulher</button>
+            <button id="man-btn" onclick="changeButtonColorMan()">Homem</button>
+          </div>
+          <div class="form-control">
+            <label for="height">Altura(metros)*</label>
+            <input type="text" name="height" id="height" placeholder="Exemplo 1,70" required />
+          </div>
+          <div class="form-control">
+            <label for="weight">Peso(kg)* </label>
+            <input type="text" name="weight" id="weight" placeholder="Exemplo 65,4" required />
+          </div>
+          <div class="form-control">
+            <label for="age">Idade</label>
+            <input type="text" name="age" id="age" placeholder="Exemplo 25" />
+          </div>
+          <h5>(*)Preenchimento Obrigatório!</h5>
+        </div>
+        <div class="action-control">
+          <button id="calc-btn">Calcular</button>
+          <button id="clear-btn">Limpar</button>
+        </div>
+
+      </form>
+    </div>
+    <div id="result-container" class="hide">
+      <p id="imc-number">Seu IMC: <span></span></p>
+      <p id="imc-info">Situação atual: <span></span></p>
+      <h3>Confira as classificações</h3>
+      <div id="imc-table">
+        <div class="table-header">
+          <h4>IMC</h4>
+          <h4>Classificação</h4>
+          <h4>Obesidade</h4>
+        </div>
+      </div>
+      <button id="back-btn">Voltar</button>
+    </div>
+  </div>
+  <script>
+    // Informações IMC
+    const data = [
+      {
+        min: 0,
+        max: 18.4,
+        classification: "Menor que 18,5",
+        info: "Magreza",
+        obesity: "0",
+      },
+      {
+        min: 18.5,
+        max: 24.9,
+        classification: "Entre 18,5 e 24,9",
+        info: "Normal",
+        obesity: "0",
+      },
+      {
+        min: 25,
+        max: 29.9,
+        classification: "Entre 25,0 e 29,9",
+        info: "Sobrepeso",
+        obesity: "I",
+      },
+      {
+        min: 30,
+        max: 39.9,
+        classification: "Entre 30,0 e 39,9",
+        info: "Obesidade",
+        obesity: "II",
+      },
+      {
+        min: 40,
+        max: 99,
+        classification: "Maior que 40,0",
+        info: "Obesidade grave",
+        obesity: "III",
+      },
+    ];
+
+    // Seleção de elementos
+    const imcTable = document.querySelector("#imc-table");
+    const womanBtn = document.querySelector("#woman-btn");
+    const manBtn = document.getElementById("man-btn");
+    const heightInput = document.querySelector("#height");
+    const weightInput = document.querySelector("#weight");
+    const ageInput = document.querySelector("#age");
+    const calcBtn = document.querySelector("#calc-btn");
+    const clearBtn = document.querySelector("#clear-btn");
+
+    const calcContainer = document.querySelector("#calc-container");
+    const resultContainer = document.querySelector("#result-container");
+
+    const imcNumber = document.querySelector("#imc-number span");
+    const imcInfo = document.querySelector("#imc-info span");
+
+    const backBtn = document.querySelector("#back-btn");
+
+    // Funções
+    function createTable(data) {
+      data.forEach((item) => {
+        const div = document.createElement("div");
+        div.classList.add("table-data");
+
+        const classification = document.createElement("p");
+        classification.innerText = item.classification;
+
+        const info = document.createElement("p");
+        info.innerText = item.info;
+
+        const obesity = document.createElement("p");
+        obesity.innerText = item.obesity;
+
+        div.appendChild(classification);
+        div.appendChild(info);
+        div.appendChild(obesity);
+
+        imcTable.appendChild(div);
+      });
+    }
+
+    function validDigits(text) {
+      return text.replace(/[^0-9,]/g, "");
+    }
+
+    function calcImc(height, weight) {
+      const imc = (weight / (height * height)).toFixed(1);
+      return imc;
+    }
+
+    function cleanInputs() {
+      heightInput.value = "";
+      weightInput.value = "";
+      ageInput.value = "";
+      imcNumber.className = "";
+      imcInfo.className = "";
+      womanBtn.checked = false;
+      manBtn.checked = false;
+      womanBtn.style.backgroundColor = "";
+      womanBtn.style.borderColor = "";
+      womanBtn.style.color = "";
+      manBtn.style.backgroundColor = "";
+      manBtn.style.borderColor = "";
+      manBtn.style.color = "";
+    }
+
+    function showOrHideResults() {
+      calcContainer.classList.toggle("hide");
+      resultContainer.classList.toggle("hide");
+    }
+
+    function changeButtonColorWoman() {
+      womanBtn.style.backgroundColor = "#d38bfd";
+      womanBtn.style.borderColor = "#d38bfd";
+      womanBtn.style.color = "white";
+      manBtn.style.backgroundColor = "";
+      manBtn.style.borderColor = "";
+      manBtn.style.color = "";
+    }
+
+    function changeButtonColorMan() {
+      manBtn.style.backgroundColor = "#36b1df";
+      manBtn.style.borderColor = "#36b1df";
+      manBtn.style.color = "white";
+      womanBtn.style.backgroundColor = "";
+      womanBtn.style.borderColor = "";
+      womanBtn.style.color = "";
+    }
+
+    calcBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const weight = +weightInput.value.replace(",", ".");
+      const height = +heightInput.value.replace(",", ".");
+
+      if (!weight || !height) {
+        alert("Os campos de altura e peso são obrigatórios.");
+        return;
+      }
+    });
+
+    // Criar Tabela
+    createTable(data);
+
+    // Eventos
+    [heightInput, weightInput].forEach((el) => {
+      el.addEventListener("input", (e) => {
+        const updatedValue = validDigits(e.target.value);
+
+        e.target.value = updatedValue;
+      });
+    });
+
+    womanBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      changeButtonColorWoman();
+    });
+
+    manBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      changeButtonColorMan();
+    });
+
+    calcBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const weight = +weightInput.value.replace(",", ".");
+      const height = +heightInput.value.replace(",", ".");
+
+      console.log(weight, height);
+
+      if (!weight || !height) return;
+
+      const imc = calcImc(height, weight);
+      let info;
+
+      data.forEach((item) => {
+        if (imc >= item.min && imc <= item.max) {
+          info = item.info;
+        }
+      });
+
+      if (!info) return;
+
+      imcNumber.innerText = imc;
+      imcInfo.innerText = info;
+
+      switch (info) {
+        case "Magreza":
+          imcNumber.classList.add("low");
+          imcInfo.classList.add("low");
+          break;
+        case "Normal":
+          imcNumber.classList.add("good");
+          imcInfo.classList.add("good");
+          break;
+        case "Sobrepeso":
+          imcNumber.classList.add("low");
+          imcInfo.classList.add("low");
+          break;
+        case "Obesidade":
+          imcNumber.classList.add("medium");
+          imcInfo.classList.add("medium");
+          break;
+        case "Obesidade grave":
+          imcNumber.classList.add("high");
+          imcInfo.classList.add("high");
+          break;
+      }
+
+      showOrHideResults();
+    });
+
+    clearBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      cleanInputs();
+    });
+
+    backBtn.addEventListener("click", (e) => {
+      cleanInputs();
+      showOrHideResults();
+    });
+
+  </script>
+</body>
+
+</html>
