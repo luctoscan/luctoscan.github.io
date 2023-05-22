@@ -5,6 +5,7 @@
 /* Cor de background. */
 body {
   background-color: #F7FFF7;
+  border: 2px solid black;
 }
 /* Altere alguns estilos de destaques. */
 .local,
@@ -30,6 +31,7 @@ em {
 }
 /* Utilizando style aprendido durante aula aovivo. */  
 #foto {
+  border:2px solid black;
   border-radius: 35%;
 /* Hover que aprendi na mentoria do Luquinha. */  
 }
