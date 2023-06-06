@@ -1,41 +1,26 @@
 /* Fontes diferente para o nome e descrição. */
-.nome, .sobre {
+.nome,
+.sobre {
   font-family: Arial, Helvetica, sans-serif;
 }
 /* Cor de background. */
 body {
-  background-color: #F7FFF7;
-  border: 2px solid black;
+  background-color: #f7fff7;
 }
 /* Altere alguns estilos de destaques. */
 .local,
 em {
-  color: #FF6B6B;
+  color: #ff6b6b;
   font-size: 20px;
 }
-/* Altere o tamanho dos itens da lista de habilidades. */
-.hab1 {
-  font-size: 18px;
-}
 
-.hab2 {
-  font-size: 16px;
-}
-
-.hab3 {
-  font-size: 18px;
-}
-
-.hab4 {
-  font-size: 16px;
-}
-/* Utilizando style aprendido durante aula aovivo. */  
+/* Utilizando style aprendido durante aula aovivo. */
 #foto {
-  border:2px solid black;
+  border: 2px solid black;
   border-radius: 35%;
-/* Hover que aprendi na mentoria do Luquinha. */  
+  /* Hover que aprendi na mentoria do Luquinha. */
 }
 #foto:hover {
-transform: rotateY(720deg);
-transition: all 2s ease;
+  transform: rotateY(720deg);
+  transition: all 2s ease;
 }
